@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.log
+*.pdf
+*.html
+*.zip
+*.csv
+*.db
+clean_wordlist.txt
+sorted_by_length.txt
+wordlist.txt
+chunk_*
+keystroke-env/
+reports/
