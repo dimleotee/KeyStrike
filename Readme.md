@@ -2,7 +2,7 @@
 ![GitHub repo stars](https://img.shields.io/github/stars/dimleotee/KeyStrike?style=social)
 **KeyStrike** is an ethical brute-force and reconnaissance toolkit built in Python for educational and awareness purposes. It helps security professionals and learners understand how attackers locate and attempt to access admin panels, directories, subdomains, and vulnerable services using brute force or scanning techniques.
 
-> **Created by:** Teejay
+> **Created by:** Teejay**
 > **Status:** Active & Maintained
 
 ---
