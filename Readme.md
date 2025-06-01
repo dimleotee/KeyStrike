@@ -29,7 +29,7 @@ https://github.com/dimleotee/KeyStrike.git
 # Navigate into the project folder
 cd KeyStrike
 
-# (Optional) Create and activate virtual environment
+# Create and activate virtual environment
 python3 -m venv keystike-env
 source keystike-env/bin/activate
 
