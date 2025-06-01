@@ -11,6 +11,7 @@
 ## Features
 
 * ✅ **FTP Brute Forcer**
+* -  Multithreaded FTP Brute Force with Clean Output and Logging
 * ✅ **SSH Brute Forcer**
 * ✅ **Admin Panel Finder (HTTP + HTTPS)**
 * ✅ **Subdomain Scanner**
@@ -51,6 +52,7 @@ Follow the menu to choose between:
 * Subdomain enumeration
 * Directory brute forcing
 * Report exporting (PDF/HTML)
+* The FTP Brute Forcer now supports multithreading, logs successful credentials to success_log.txt, and hides failed attempts for cleaner output.
 
 ---
 
