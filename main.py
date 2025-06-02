@@ -10,7 +10,7 @@ def main():
     print()
 
     print(color_text("1. FTP Brute Force", "yellow"))
-    print(color_text("2. SSH Brute Force", "yellow"))
+    print(color_text("2. SSH Brute Forcer", "yellow"))
     print(color_text("3. Admin Panel Finder", "yellow"))
     print(color_text("4. Subdomain Finder", "blue"))
     print(color_text("5. Directory Brute Forcer", "blue"))
