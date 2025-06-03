@@ -1,3 +1,12 @@
+"""
+DISCLAIMER:
+This tool is intended **strictly for educational and authorized testing purposes only**.
+You must obtain **explicit permission** from the owner of any system you target with this script.
+Unauthorized access or misuse of this tool **may be illegal** and can result in **criminal charges**.
+
+The developer and contributors of KeyStrike **are not responsible** for any misuse or damage caused.
+Use responsibly and ethically.
+"""
 import requests
 from utils.colors import color_text
 from datetime import datetime
