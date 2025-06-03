@@ -92,9 +92,8 @@ KeyStrike is licensed for **educational use only**. Unauthorized or malicious us
 
 * **Teejay** - Project Lead & Developer
 * **Professor Ace** - Architect & Mentor
-
-## Description
 ---
+## Description
  **What's Next?**
 We’re excited to announce that KeyStrike v2 will introduce **LLM (Large Language Model) integration** to elevate offensive security automation. The upcoming version will feature an AI controller to:
 
