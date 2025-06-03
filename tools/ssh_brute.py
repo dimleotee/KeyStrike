@@ -1,4 +1,5 @@
 import paramiko
+import os
 from utils.colors import color_text
 
 def run():
@@ -18,14 +19,19 @@ def run():
 
                     print(color_text(f"[SUCCESS] Password found: {password}", "green"))
 
-                    # Save result to success_log.txt
+                    if not os.path.exists("success_log.txt"):
+                        with open("success_log.txt", "w") as temp:
+                            pass
+                        os.chmod("success_log.txt", 0o666)
+
+
                     with open("success_log.txt", "w") as log:
                         log.write(f"Target: {host}\nUsername: {username}\nPassword: {password}\n")
 
                     ssh.close()
                     return
                 except paramiko.AuthenticationException:
-                    pass  # hide failed attempts
+                    pass
                 except paramiko.SSHException as e:
                     print(color_text(f"[!] SSH Error: {e}", "red"))
                     break

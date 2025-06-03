@@ -1,10 +1,10 @@
 import ftplib
 import threading
+import os
 from utils.colors import color_text
 from tqdm import tqdm
 from queue import Queue
 
-# Configurations
 MAX_THREADS = 10
 success_found = False
 lock = threading.Lock()
@@ -22,6 +22,13 @@ def attempt_login(target_ip, username):
                     if not success_found:
                         success_found = True
                         print(color_text(f"\n[SUCCESS] Password found: {password}", "green"))
+
+                        # Ensure log file is writable in all environments
+                        if not os.path.exists("success_log.txt"):
+                            with open("success_log.txt", "w") as temp:
+                                pass
+                            os.chmod("success_log.txt", 0o666)
+
                         with open("success_log.txt", "w") as log_file:
                             log_file.write(f"Target: {target_ip}\nUsername: {username}\nPassword: {password}\n")
         except:
@@ -46,11 +53,9 @@ def run():
         print(color_text("[-] wordlist.txt is not writable or accessible.", "red"))
         return
 
-    # Load passwords into queue
     for pw in passwords:
         q.put(pw)
 
-    # Show progress bar
     pbar = tqdm(total=q.qsize(), desc="Brute Forcing", ncols=100)
 
     def progress_updater():
@@ -59,14 +64,12 @@ def run():
 
     threading.Thread(target=progress_updater, daemon=True).start()
 
-    # Start threads
     threads = []
     for _ in range(MAX_THREADS):
         t = threading.Thread(target=attempt_login, args=(target_ip, username))
         t.start()
         threads.append(t)
 
-    # Wait for all threads
     for t in threads:
         t.join()
 
@@ -74,4 +77,3 @@ def run():
 
     if not success_found:
         print(color_text("\n[-] Password not found in wordlist.", "red"))
-
