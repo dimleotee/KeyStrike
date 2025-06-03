@@ -104,7 +104,23 @@ We’re excited to announce that KeyStrike v2 will introduce **LLM (Large Langua
 
 🔒 KeyStrike v1 is just the beginning — the next evolution brings AI to ethical hacking.
 
+---
+## ⚠️ Disclaimer
+
+**KeyStrike** is a penetration testing tool designed for **educational use** and **authorized testing environments only** (such as personal labs or systems you own).
+
+By using this tool, you agree to the following:
+
+- You have **explicit permission** to test the systems you target.
+- You understand that unauthorized use of this tool **is illegal** in most jurisdictions.
+- You will not hold the developer or contributors **liable for any damage** or legal consequences resulting from misuse.
+
+🧠 Use it responsibly. Be ethical. Learn with integrity.
+
 
 ## Contact
 
 For collaboration, reach out via GitHub
+
+
+
