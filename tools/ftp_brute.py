@@ -23,7 +23,7 @@ def attempt_login(target_ip, username):
                         success_found = True
                         print(color_text(f"\n[SUCCESS] Password found: {password}", "green"))
 
-                        # Ensure log file is writable in all environments
+                       
                         if not os.path.exists("success_log.txt"):
                             with open("success_log.txt", "w") as temp:
                                 pass
